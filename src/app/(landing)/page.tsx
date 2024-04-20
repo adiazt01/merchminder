@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import {
   BoldIcon,
+  LockIcon,
   MountainIcon,
   RocketIcon,
   SparklesIcon,

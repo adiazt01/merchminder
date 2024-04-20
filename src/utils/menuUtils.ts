@@ -10,5 +10,5 @@ export const MENU_DASHBOARD = [
         name: "Products",
         icon: Package,
         href: "/dashboard/products",
-    }
+    },
 ]

@@ -1,38 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
-import Link from "next/link";
-import {
-  Badge,
-  Bell,
-  CircleUser,
-  Home,
-  LineChart,
-  Menu,
-  Package,
-  Package2,
-  Search,
-  ShoppingCart,
-  Users,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
-import { Input } from "@/components/ui/input";
 import { NavbarDashboard } from "@/components/navbar/NavbarDashboard";
 import { SidebarDashboard } from "@/components/sidebar/SidebarDashboard";
 

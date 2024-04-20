@@ -10,7 +10,7 @@ export default async function ProductsPage() {
       <div className="flex items-center">
         <h1 className="text-lg font-semibold md:text-2xl">Products</h1>
       </div>
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-full p-4 rounded-lg border border-dashed shadow-sm">
+      <section className="flex w-full h-full">
         <ProductDataTable columns={columns} data={products} />
       </section>
     </main>

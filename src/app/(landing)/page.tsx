@@ -1,6 +1,5 @@
 
 import { Button } from "@/components/ui/button";
-import { auth } from "@/utils/auth";
 import {
   BoldIcon,
   MountainIcon,
@@ -44,7 +43,7 @@ export default async function Home() {
               CTA
             </Link>
           </nav>
-          <Button className="ml-auto lg:hidden" variant="primary">
+          <Button className="ml-auto lg:hidden" variant="default">
             Menu
           </Button>
         </header>

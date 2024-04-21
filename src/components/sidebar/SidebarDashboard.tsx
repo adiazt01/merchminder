@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { MENU_DASHBOARD } from "@/utils/menuUtils";
 import { NavLink } from "./NavLink";
 
-export async function SidebarDashboard() {
+export function SidebarDashboard() {
   return (
     <aside className="hidden border-r bg-muted/40 md:block">
       <div className="flex h-full max-h-screen flex-col gap-2">

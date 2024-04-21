@@ -25,7 +25,6 @@ export const columns: ColumnDef<Product>[] = [
     id: "actions",
     cell: ({ row }) => {
       const product = row.original;
-      console.log(product);
 
       return (
         <DropdownMenu>
@@ -55,10 +54,6 @@ export const columns: ColumnDef<Product>[] = [
     accessorKey: "name",
   },
   {
-    header: "Description",
-    accessorKey: "description",
-  },
-  {
     accessorKey: "price",
     header: ({ column }) => {
       return (
@@ -81,5 +76,9 @@ export const columns: ColumnDef<Product>[] = [
 
       return <div className="text-center font-medium">{formattedPrice}</div>;
     },
+  },
+  {
+    header: "Description",
+    accessorKey: "description",
   },
 ];

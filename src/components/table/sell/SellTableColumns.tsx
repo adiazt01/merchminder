@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal, ArrowUpDown } from "lucide-react";
+import { MoreHorizontal, ArrowUpDown, ArrowUp } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,7 +22,7 @@ const ActionCell = ({ row }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-8 w-8 p-0">
+        <Button variant="ghost" className="h-8 w-8 mx-auto p-0">
           <span className="sr-only">Open menu</span>
           <MoreHorizontal className="h-4 w-4" />
         </Button>
@@ -44,10 +44,6 @@ const ActionCell = ({ row }) => {
 
 export const columns: ColumnDef<Sale>[] = [
   {
-    id: "actions",
-    cell: ActionCell,
-  },
-  {
     accessorKey: "saleTotal",
     header: ({ column }) => {
       return (
@@ -57,7 +53,13 @@ export const columns: ColumnDef<Sale>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Price
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {
+            <ArrowUp
+              className={`ml-2 h-4 w-4 ${
+                column.getIsSorted() === "asc" ? "rotate-180" : ""
+              }`}
+            />
+          }
         </Button>
       );
     },
@@ -72,20 +74,41 @@ export const columns: ColumnDef<Sale>[] = [
     },
   },
   {
-    header: "Productos",
-    accessorKey: "products",
-    cell: ({ row }) => {
-      const products = row.original.saleItems;
-      console.log(products);
+    accessorKey: "createdAt",
+    header: ({ column }) => {
       return (
-        <div className="flex flex-col">
-          {products && products.map((product) => (
-            <div key={product.id} className="flex items-center justify-between">
-              <span>{product.product.name}</span>
-            </div>
-          ))}
-        </div>
+        <Button
+          variant="ghost"
+          className="w-full"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Date
+          {
+            <ArrowUp
+              className={`ml-2 h-4 w-4 ${
+                column.getIsSorted() === "asc" ? "rotate-180" : ""
+              }`}
+            />
+          }
+        </Button>
       );
     },
+    cell: ({ row }) => {
+      const date = new Date(row.original.createdAt);
+      const formattedDate = new Intl.DateTimeFormat("es-ES", {
+        dateStyle: "medium",
+      }).format(date);
+
+      return <div className="text-center">{formattedDate}</div>;
+    },
+  },
+  {
+    id: "actions",
+    header: () => <h3 className="w-full text-center">Actions</h3>,
+    cell: ({ row }) => (
+      <div className="flex flex-row items-center justify-center">
+        <ActionCell row={row} />
+      </div>
+    ),
   },
 ];

@@ -53,7 +53,9 @@ export default async function SalesPage() {
               <SellDataTable columns={columns} data={sells} />
             </div>
           </div>
-          <BigSalesCard />
+          <div className="relative w-full md:min-h-screen">
+            <BigSalesCard />
+          </div>
         </section>
       </main>
     </SalesProvider>

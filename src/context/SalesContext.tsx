@@ -1,12 +1,18 @@
 "use client";
 
+import { Client, Sale, SaleToProduct } from "@prisma/client";
+import { createContext, useContext, useState } from "react";
+
+type SaleWithDetails = Sale & {
+  client: Client;
+  saleItems: SaleToProduct[];
+};
+
 interface SalesContextInterface {
-  selectedSale: Sale | null;
-  setSelectedSale: (sale: Sale) => void;
+  selectedSale: SaleWithDetails | null;
+  setSelectedSale: (sale: SaleWithDetails) => void;
 }
 
-import { Sale } from "@prisma/client";
-import { createContext, useContext, useState } from "react";
 
 export const SalesContext = createContext<SalesContextInterface>({
     selectedSale: null,
@@ -16,7 +22,7 @@ export const SalesContext = createContext<SalesContextInterface>({
 export const SalesProvider = ({ children }:{
     children: React.ReactNode;
 }) => {
-  const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
+  const [selectedSale, setSelectedSale] = useState<SaleWithDetails | null>(null);
 
   return (
     <SalesContext.Provider value={{ selectedSale, setSelectedSale }}>

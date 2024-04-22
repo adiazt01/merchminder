@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { SalesContext } from "@/context/SalesContext";
 import { useContext } from "react";
 
@@ -27,23 +28,91 @@ export function BigSalesCard() {
     );
   }
 
-  const { saleTotal, clientId, createdAt, id, updatedAt, userId } =
-    selectedSale;
+  console.log(selectedSale);
+
+  const {
+    saleTotal,
+    clientId,
+    createdAt,
+    id,
+    updatedAt,
+    userId,
+    saleItems,
+    client,
+  } = selectedSale;
+
+  const totalProductsSellsWithTotalPrice = saleItems.map((item) => {
+    return {
+      ...item,
+      totalPrice: item.quantity * item.salePrice,
+    };
+  });
 
   return (
-    <Card className="w-full order-first md:order-last">
-      <CardHeader>
+    <Card className="sticky top-10 flex flex-col  order-first md:order-last">
+      <CardHeader className="bg-gray-50 border-b py-4">
         <CardTitle className="text-xl">
           Venta # {id}
-          <CardDescription className="flex flex-col">
-            <time>
+          <CardDescription className="flex flex-row gap-2">
+            <time className="font-medium">
               Fecha: {new Date(createdAt).toLocaleDateString("es-VE")}
             </time>
-            <time>Hora: {new Date(createdAt).toLocaleTimeString("es-VE")}</time>
+            <time className="font-medium">
+              Hora: {new Date(createdAt).toLocaleTimeString("es-VE")}
+            </time>
           </CardDescription>
         </CardTitle>
       </CardHeader>
-      <CardContent></CardContent>
+      <CardContent>
+        <div className="flex pt-2 gap-3 flex-col">
+          <h3 className="font-semibold text-lg text-neutral-700">
+            Productos vendidos
+          </h3>
+          <div className="flex flex-col">
+            {totalProductsSellsWithTotalPrice.map((productSell) => (
+              <div
+                key={productSell.productId}
+                className="flex flex-row justify-between w-full"
+              >
+                <span className="font-medium text-md text-neutral-600">
+                  {`${productSell.product.name} ${productSell.quantity}x`}
+                </span>
+                <span className="font-bold -tracking-tighter">{`$${productSell.totalPrice}`}</span>
+              </div>
+            ))}
+          </div>
+          <Separator />
+          <h3 className="font-semibold text-lg text-neutral-700">
+            Información de la venta
+          </h3>
+          <div className="flex flex-row justify-between">
+            <span className="font-medium text-md text-neutral-600">Total</span>
+            <span className="font-bold -tracking-tighter">{`$${saleTotal}`}</span>
+          </div>
+          <Separator />
+          <h3 className="font-semibold text-lg text-neutral-700">
+            Información del cliente
+          </h3>
+          <div className="flex flex-col">
+            <div className="flex flex-row justify-between">
+              <span className="font-medium text-md text-neutral-600">
+                Nombre
+              </span>
+              <span className="font-medium text-md text-neutral-600">
+                {client.name}
+              </span>
+            </div>
+            <div className="flex flex-row justify-between">
+              <span className="font-medium text-md text-neutral-600">
+                Telefono
+              </span>
+              <span className="font-medium text-md text-neutral-600">
+                {client.phone}
+              </span>
+            </div>
+          </div>
+        </div>
+      </CardContent>
     </Card>
   );
 }

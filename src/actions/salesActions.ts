@@ -3,7 +3,7 @@
 import prisma from "@/lib/db";
 import { getUserId } from "@/lib/user";
 import { CreateSaleSchema } from "@/schemas/sellSchema";
-import { Product, Sale } from "@prisma/client";
+import { Sale } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 interface FormState {
@@ -12,7 +12,7 @@ interface FormState {
   error?: Error | null;
 }
 
-export async function createSell(data): Promise<FormState> {
+export async function createSell(data: Iterable<readonly [PropertyKey, any]>): Promise<FormState> {
   const userId = await getUserId();
   const formData = Object.fromEntries(data);
 
@@ -61,8 +61,6 @@ export async function createSell(data): Promise<FormState> {
     saleTotal += item.quantity * item.salePrice;
   }
 
-  console.log(saleTotal);  // Imprime la venta total
-
   try {
     const newSale = await prisma.sale.create({
       data: {
@@ -70,7 +68,7 @@ export async function createSell(data): Promise<FormState> {
         clientId: clientId,
         saleTotal: saleTotal,
         saleItems: {
-          create: saleItems.map(item => ({
+          create: saleItems.map((item) => ({
             salePrice: item.salePrice,
             quantity: item.quantity,
             productId: item.productId,
@@ -78,9 +76,14 @@ export async function createSell(data): Promise<FormState> {
         },
       },
     });
-    console.log(newSale);  // Imprime la venta creada
+
+    revalidatePath("/dashboard/sales");
+    return { data: newSale, message: "Sale created successfully", error: null };
   } catch (error) {
-    console.log(error);
+    if (error instanceof Error) {
+      return { message: "An error occurred while creating the sale", error };
+    } else {
+      return { message: "An error occurred while creating the sale" };
+    }
   }
-  
 }

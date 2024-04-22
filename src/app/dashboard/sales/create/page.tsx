@@ -1,12 +1,15 @@
 import { CreateSellForm } from "@/components/forms/CreateSellForm";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { getAllClients } from "@/lib/ClientsData";
 import { getAllProducts } from "@/lib/ProductsData";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 export default async function CreateSellPage() {
   const products = await getAllProducts();
+  const clients = await getAllClients();
+
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
       <div className="flex flex-row justify-between items-center">
@@ -32,7 +35,7 @@ export default async function CreateSellPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <CreateSellForm dataProducts={products} />
+            <CreateSellForm dataProducts={products} clientsData={clients} />
           </CardContent>
         </Card>
       </section>

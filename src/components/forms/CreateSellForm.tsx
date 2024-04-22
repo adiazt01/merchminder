@@ -2,7 +2,7 @@
 
 import { CreateSaleSchemaForm } from "@/schemas/sellSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Product } from "@prisma/client";
+import { Client, Product } from "@prisma/client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -30,9 +30,13 @@ import { createSell } from "@/actions/salesActions";
 
 interface CreateSellFormProps {
   dataProducts: Product[];
+  clientsData: Client[];
 }
 
-export function CreateSellForm({ dataProducts }: CreateSellFormProps) {
+export function CreateSellForm({
+  dataProducts,
+  clientsData,
+}: CreateSellFormProps) {
   const form = useForm<z.infer<typeof CreateSaleSchemaForm>>({
     resolver: zodResolver(CreateSaleSchemaForm),
     defaultValues: {
@@ -53,13 +57,12 @@ export function CreateSellForm({ dataProducts }: CreateSellFormProps) {
   };
 
   const removeProduct = (index: number) => {
-
     setSalePrice((prev) => {
-        const product = dataProducts.find(
-            (product) => product.id.toString() === products[index].productId
-        );
-        return prev - product.price;
-    } )
+      const product = dataProducts.find(
+        (product) => product.id.toString() === products[index].productId
+      );
+      return prev - product.price;
+    });
 
     const newProducts = [...products];
     newProducts.splice(index, 1);
@@ -75,18 +78,17 @@ export function CreateSellForm({ dataProducts }: CreateSellFormProps) {
   };
 
   async function onSubmit(values: z.infer<typeof CreateSaleSchemaForm>) {
-    console.log(`📦 Valores del formulario`);
-    console.log(values);
-  
     const products = values.products.map((product) => ({
       ...product,
       productId: Number(product.productId),
       quantity: Number(product.quantity),
     }));
-  
+
     const formData = new FormData();
+
     formData.append("clientId", values.clientId);
     formData.append("products", JSON.stringify(products));
+
     const res = await createSell(formData);
     console.log(res);
   }
@@ -99,11 +101,24 @@ export function CreateSellForm({ dataProducts }: CreateSellFormProps) {
           name="clientId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Client ID</FormLabel>
-              <FormControl>
-                <Input placeholder="Client ID" {...field} />
-              </FormControl>
-              <FormDescription>Enter the client's ID.</FormDescription>
+              <FormLabel>Cliente</FormLabel>
+              <Select onValueChange={(value) => field.onChange(value)}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a client" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {clientsData.map((client) => (
+                    <SelectItem key={client.id} value={client.id.toString()}>
+                      {client.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormDescription>
+                Select a client to associate with the sale.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

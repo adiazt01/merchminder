@@ -21,6 +21,8 @@ export async function createSell(data): Promise<FormState> {
     products: JSON.parse(formData.products),
   });
 
+  console.log(clientId, products);
+
   for (const product of products) {
     if (!product.productId || !product.quantity) {
       return { message: "All products must have a quantity" };
@@ -53,11 +55,20 @@ export async function createSell(data): Promise<FormState> {
     };
   });
 
+  let saleTotal = 0;
+
+  for (const item of saleItems) {
+    saleTotal += item.quantity * item.salePrice;
+  }
+
+  console.log(saleTotal);  // Imprime la venta total
+
   try {
     const newSale = await prisma.sale.create({
       data: {
         userId: userId,
         clientId: clientId,
+        saleTotal: saleTotal,
         saleItems: {
           create: saleItems.map(item => ({
             salePrice: item.salePrice,
@@ -67,6 +78,7 @@ export async function createSell(data): Promise<FormState> {
         },
       },
     });
+    console.log(newSale);  // Imprime la venta creada
   } catch (error) {
     console.log(error);
   }

@@ -38,6 +38,7 @@ model Client {
 
 model Sale {
   id        Int             @id @default(autoincrement())
+  saleTotal Float
   userId    String
   clientId  Int
   createdAt DateTime        @default(now())

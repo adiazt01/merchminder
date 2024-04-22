@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sale } from "@prisma/client";
 
-
 export const columns: ColumnDef<Sale>[] = [
   {
     id: "actions",
@@ -44,11 +43,7 @@ export const columns: ColumnDef<Sale>[] = [
     },
   },
   {
-    header: "Name",
-    accessorKey: "name",
-  },
-  {
-    accessorKey: "price",
+    accessorKey: "saleTotal",
     header: ({ column }) => {
       return (
         <Button
@@ -62,7 +57,7 @@ export const columns: ColumnDef<Sale>[] = [
       );
     },
     cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price") as string);
+      const price = row.original.saleTotal;
       const formattedPrice = new Intl.NumberFormat("es-ES", {
         style: "currency",
         currency: "USD",
@@ -72,7 +67,20 @@ export const columns: ColumnDef<Sale>[] = [
     },
   },
   {
-    header: "Description",
-    accessorKey: "description",
+    header: "Productos",
+    accessorKey: "products",
+    cell: ({ row }) => {
+      const products = row.original.saleItems;
+      console.log(products);
+      return (
+        <div className="flex flex-col">
+          {products && products.map((product) => (
+            <div key={product.id} className="flex items-center justify-between">
+              <span>{product.product.name}</span>
+            </div>
+          ))}
+        </div>
+      );
+    },
   },
 ];

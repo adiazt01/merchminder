@@ -9,6 +9,15 @@ export const getAllSales = async () => {
       where: {
         userId,
       },
+      include: {
+        client: true,
+        saleItems: {
+          include: {
+            sale: true,
+            product: true,
+          },
+        },
+      },
     });
 
     return sales;

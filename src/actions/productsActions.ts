@@ -6,6 +6,7 @@ import { createProductSchema } from "@/schemas/productSchemas";
 import { Product } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
+
 interface FormState {
   message?: string;
   data?: Product | null;

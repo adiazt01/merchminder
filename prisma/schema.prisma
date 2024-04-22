@@ -11,11 +11,47 @@ datasource db {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
-  userId      String   
+  id          Int        @id @default(autoincrement())
+  userId      String
   name        String
   price       Float
   description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  saleItems   SaleToProduct[]
+
+  @@unique([userId, name])
+}
+
+model client {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  phone     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  sales     Sale[]
+}
+
+
+model Sale {
+  id        Int        @id @default(autoincrement())
+  userId    String
+  clientId  Int
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  saleItems SaleToProduct[]
+  client    client     @relation(fields: [clientId], references: [id])
+}
+
+model  SaleToProduct {
+  id        Int      @id @default(autoincrement())
+  saleId    Int
+  productId Int
+  quantity  Int
+  salePrice Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product @relation(fields: [productId], references: [id])
+  sale      Sale    @relation(fields: [saleId], references: [id])
 }

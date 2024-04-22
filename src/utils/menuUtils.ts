@@ -1,4 +1,4 @@
-import { Home, Package } from "lucide-react";
+import { Home, Package, CreditCard } from "lucide-react";
 
 export const MENU_DASHBOARD = [
     {
@@ -7,8 +7,13 @@ export const MENU_DASHBOARD = [
         href: "/dashboard",
     },
     {
-        name: "Products",
+        name: "Productos",
         icon: Package,
         href: "/dashboard/products",
     },
+    {
+        name: "Ventas",
+        icon: CreditCard,
+        href: "/dashboard/sales",
+    }
 ]

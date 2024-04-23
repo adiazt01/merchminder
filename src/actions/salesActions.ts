@@ -99,6 +99,7 @@ export async function deleteSellAction(saleId: number): Promise<FormState> {
     });
 
     revalidatePath("/dashboard/sales");
+    
     return { message: "Sale deleted successfully", error: null };
   } catch (error) {
     if (error instanceof Error) {

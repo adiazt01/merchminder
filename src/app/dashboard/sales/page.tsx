@@ -36,7 +36,7 @@ export default async function SalesPage() {
           </Button>
         </div>
         <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="grid row-span-2 gap-4">
+          <div className="grid row-span-3 gap-4">
             <Card className="w-full">
               <CardHeader>
                 <CardDescription className="-mb-1">Esta semana</CardDescription>
@@ -53,7 +53,7 @@ export default async function SalesPage() {
               <SellDataTable columns={columns} data={sells} />
             </div>
           </div>
-          <div className="relative w-full md:min-h-screen">
+          <div className="relative w-full ">
             <BigSalesCard />
           </div>
         </section>

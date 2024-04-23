@@ -33,11 +33,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { deleteSellAction } from "@/actions/salesActions";
 
 const ActionCell = ({ row }) => {
   const sell = row.original;
   const { setSelectedSale } = useContext(SalesContext);
   const router = useRouter();
+
+  const handleDelete = async () => {
+    const res = await deleteSellAction(sell.id);
+    console.log(res);
+  };
 
   return (
     <Dialog>
@@ -87,8 +93,10 @@ const ActionCell = ({ row }) => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-        <DialogClose asChild>
-          <Button type="submit">Confirm</Button>
+          <DialogClose asChild>
+            <Button onClick={() => handleDelete()} type="submit">
+              Confirm
+            </Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

@@ -52,8 +52,8 @@ export function SellDataTable<TData, TValue>({
   });
 
   return (
-    <div className="w-full h-full">
-      <div className="rounded-md border">
+    <div className="w-full">
+      <div className="rounded-md w-full border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

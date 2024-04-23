@@ -26,7 +26,7 @@ model Product {
 model Client {
   id        Int      @id @default(autoincrement())
   userId    String
-  name      String?
+  name      String?  @default("Cliente sin nombre")
   email     String?
   phone     String?
   createdAt DateTime @default(now())
@@ -44,17 +44,17 @@ model Sale {
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
   saleItems SaleToProduct[]
-  client    Client          @relation(fields: [clientId], references: [id])
+  client    Client          @relation(fields: [clientId], references: [id], onDelete: Cascade)
 }
 
 model SaleToProduct {
   id        Int      @id @default(autoincrement())
   saleId    Int
-  productId Int
+  productId Int?
   quantity  Int
   salePrice Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  product   Product  @relation(fields: [productId], references: [id])
-  sale      Sale     @relation(fields: [saleId], references: [id])
+  product   Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  sale      Sale     @relation(fields: [saleId], references: [id], onDelete: Cascade)
 }

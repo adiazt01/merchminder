@@ -12,7 +12,9 @@ interface FormState {
   error?: Error | null;
 }
 
-export async function createSell(data: Iterable<readonly [PropertyKey, any]>): Promise<FormState> {
+export async function createSell(
+  data: Iterable<readonly [PropertyKey, any]>
+): Promise<FormState> {
   const userId = await getUserId();
   const formData = Object.fromEntries(data);
 
@@ -84,6 +86,25 @@ export async function createSell(data: Iterable<readonly [PropertyKey, any]>): P
       return { message: "An error occurred while creating the sale", error };
     } else {
       return { message: "An error occurred while creating the sale" };
+    }
+  }
+}
+
+export async function deleteSellAction(saleId: number): Promise<FormState> {
+  try {
+    await prisma.sale.delete({
+      where: {
+        id: saleId,
+      },
+    });
+
+    revalidatePath("/dashboard/sales");
+    return { message: "Sale deleted successfully", error: null };
+  } catch (error) {
+    if (error instanceof Error) {
+      return { message: "An error occurred while deleting the sale", error };
+    } else {
+      return { message: "An error occurred while deleting the sale" };
     }
   }
 }

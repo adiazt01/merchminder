@@ -1,7 +1,14 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal, ArrowUpDown, ArrowUp } from "lucide-react";
+import {
+  MoreHorizontal,
+  ArrowUp,
+  Pencil,
+  Eye,
+  Trash,
+  Bolt,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,31 +21,78 @@ import {
 import { Sale } from "@prisma/client";
 import { useContext } from "react";
 import { SalesContext } from "@/context/SalesContext";
+import { useRouter } from "next/navigation";
+import { Separator } from "@/components/ui/separator";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const ActionCell = ({ row }) => {
   const sell = row.original;
   const { setSelectedSale } = useContext(SalesContext);
+  const router = useRouter();
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-8 w-8 mx-auto p-0">
-          <span className="sr-only">Open menu</span>
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem
-          onClick={() => {
-            setSelectedSale(sell);
-            console.log(sell);
-          }}
-        >
-          Ver venta
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Dialog>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 mx-auto p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel className="flex flex-row items-center">
+            <Bolt className="h-4 w-4 mr-2" />
+            <span>Acciones</span>
+          </DropdownMenuLabel>
+          <Separator />
+          <DropdownMenuItem
+            onClick={() => {
+              setSelectedSale(sell);
+            }}
+          >
+            <Eye className="h-4 w-4 mr-2" />
+            Ver
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              router.push(`/dashboard/sales/update/${sell.id}`);
+            }}
+          >
+            <Pencil className="h-4 w-4 mr-2" />
+            Editar
+          </DropdownMenuItem>
+          <DialogTrigger asChild>
+            <DropdownMenuItem>
+              <span>Delete</span>
+            </DropdownMenuItem>
+          </DialogTrigger>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>
+            Estas seguro que deseas eliminar esta venta?
+          </DialogTitle>
+          <DialogDescription>
+            Esta acción no se puede deshacer.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+        <DialogClose asChild>
+          <Button type="submit">Confirm</Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 

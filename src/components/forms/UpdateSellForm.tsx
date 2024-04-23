@@ -96,9 +96,7 @@ export function UpdateSellForm({
           />
         </CardContent>
         <CardFooter>
-          <Button type="submit">
-            Actualizar producto
-          </Button>
+          <Button type="submit">Actualizar producto</Button>
         </CardFooter>
       </form>
     </Form>

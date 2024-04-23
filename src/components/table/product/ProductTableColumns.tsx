@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal, ArrowUpDown } from "lucide-react";
+import { MoreHorizontal, ArrowUpDown, Edit, Trash } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { DropwdownProductTable } from "@/components/dropdown/DropdownProductTable";
 
 export type Product = {
   id: number;
@@ -22,40 +23,13 @@ export type Product = {
 
 export const columns: ColumnDef<Product>[] = [
   {
-    id: "actions",
-    cell: ({ row }) => {
-      const product = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(product.id.toString())}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
-  {
     header: "Name",
     accessorKey: "name",
   },
   {
     accessorKey: "price",
     header: ({ column }) => {
+      /* TODO change the icon to a sort icon */
       return (
         <Button
           variant="ghost"
@@ -65,7 +39,7 @@ export const columns: ColumnDef<Product>[] = [
           Price
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => {
       const price = parseFloat(row.getValue("price") as string);
@@ -80,5 +54,17 @@ export const columns: ColumnDef<Product>[] = [
   {
     header: "Description",
     accessorKey: "description",
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      /* FIXME add types to product */
+      const product = row.original;
+      return (
+        <div className="flex flex-row items-center justify-center">
+          <DropwdownProductTable product={product} />
+        </div>
+      );
+    },
   },
 ];

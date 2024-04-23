@@ -15,3 +15,15 @@ export const getAllProducts = async () => {
     throw new Error("Error fetching products");
   }
 };
+
+export function getProduct(id: string) {
+  try {
+    return prisma.product.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+    });
+  } catch (error) {
+    throw new Error("Error fetching product");
+  }
+}

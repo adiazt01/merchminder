@@ -6,7 +6,6 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 export default async function ProductsPage() {
-
   return (
     <main className="flex flex-col gap-4 p-4 lg:gap-6 lg:p-6">
       <div className="flex flex-row justify-between items-center">
@@ -24,9 +23,7 @@ export default async function ProductsPage() {
         </Button>
       </div>
       <section className="flex w-full">
-        <Suspense fallback={
-          <TableDataSkeletons />
-        }>
+        <Suspense fallback={<TableDataSkeletons />}>
           <ProductContainerTable />
         </Suspense>
       </section>

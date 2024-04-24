@@ -1,44 +1,31 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal, ArrowUpDown, Edit, Trash } from "lucide-react";
+import { ArrowUp, ArrowDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { DropwdownProductTable } from "@/components/dropdown/DropdownProductTable";
-
-export type Product = {
-  id: number;
-  name: string;
-  description: string | null;
-  price: number;
-};
+import { Product } from "@prisma/client";
 
 export const columns: ColumnDef<Product>[] = [
   {
-    header: "Name",
+    header: () => <div className="text-center">Nombre</div>,
     accessorKey: "name",
   },
   {
     accessorKey: "price",
     size: 1,
     header: ({ column }) => {
-      /* TODO change the icon to a sort icon */
       return (
         <Button
           variant="ghost"
-          className="w-full"
+          className="w-full flex flex-row items-center justify-center gap-1"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Precio
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {
+            column.getIsSorted() === "asc" ? <ArrowUp className="w-4 h-4" /> : <ArrowDown className="w-4 h-4" />
+          }
         </Button>
       );
     },
@@ -53,14 +40,16 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    header: "Ventas",
+    header: () => <div className="text-center">
+      Total de ventas
+    </div>,
     accessorKey: "salesCount",
   },
 
   {
-    header: "Acciones",
+    header: () => <div className="text-center">Acciones</div>,
+    accessorKey: "actions",
     cell: ({ row }) => {
-      /* FIXME add types to product */
       const product = row.original;
       return (
         <div className="flex flex-row items-center justify-center">

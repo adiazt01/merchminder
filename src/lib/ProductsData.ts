@@ -4,8 +4,6 @@ import { getUserId } from "./user";
 export const getAllProducts = async () => {
   const userId = await getUserId();
 
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-
   try {
     const products = await prisma.product.findMany({
       where: {
@@ -27,9 +25,9 @@ export const getAllProducts = async () => {
   }
 };
 
-export function getProduct(id: string) {
+export async function getProduct(id: string) {
   try {
-    return prisma.product.findUnique({
+    return await prisma.product.findUnique({
       where: {
         id: parseInt(id),
       },

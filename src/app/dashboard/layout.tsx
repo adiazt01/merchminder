@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
           <SidebarDashboard />
-          <div className="flex flex-col">
+          <div className="flex overflow-hidden flex-col">
             <NavbarDashboard />
             {children}
           </div>

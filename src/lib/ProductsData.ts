@@ -9,8 +9,17 @@ export const getAllProducts = async () => {
       where: {
         userId,
       },
+      include: {
+        saleItems: true,
+      }
     });
-    return products;
+
+    const productsWithSalesCount = products.map(product => ({
+      ...product,
+      salesCount: product.saleItems.map(saleItem => saleItem.quantity).reduce((acc, curr) => acc + curr, 0)
+    }));
+
+    return productsWithSalesCount;
   } catch (error) {
     throw new Error("Error fetching products");
   }

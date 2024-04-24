@@ -28,6 +28,7 @@ export const columns: ColumnDef<Product>[] = [
   },
   {
     accessorKey: "price",
+    size: 1,
     header: ({ column }) => {
       /* TODO change the icon to a sort icon */
       return (
@@ -36,7 +37,7 @@ export const columns: ColumnDef<Product>[] = [
           className="w-full"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Price
+          Precio
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -52,11 +53,12 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    header: "Description",
-    accessorKey: "description",
+    header: "Ventas",
+    accessorKey: "salesCount",
   },
+
   {
-    id: "actions",
+    header: "Acciones",
     cell: ({ row }) => {
       /* FIXME add types to product */
       const product = row.original;

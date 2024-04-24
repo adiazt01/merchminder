@@ -21,7 +21,9 @@ export default async function ProductsPage() {
         <Button size="sm" asChild>
           <Link href="/dashboard/products/create">
             <Plus className="w-6 h-6 md:mr-2" />
-            <span className="hidden md:inline">Create Product</span>
+            <span className="hidden md:inline">
+              Crear producto
+            </span>
           </Link>
         </Button>
       </div>

@@ -52,7 +52,7 @@ export function ProductDataTable<TData, TValue>({
   });
 
   return (
-    <div className="flex w-full h-full overflow-x-hidden gap-4 flex-col">
+    <div className="flex p-2.5 w-full h-full overflow-x-hidden gap-4 flex-col">
       <div className="flex items-center">
         <Input
           placeholder="Pepsi cola, torta, etc."

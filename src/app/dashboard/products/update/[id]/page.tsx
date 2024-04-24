@@ -18,7 +18,7 @@ export default async function ProductUpdatePage({
     id: string;
   };
 }) {
-    const product = await getProduct(params.id);
+  const product = await getProduct(params.id);
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
@@ -37,13 +37,11 @@ export default async function ProductUpdatePage({
         </h1>
       </div>
       <section className="flex w-full h-full">
-        <Card>
+        <Card className="w-full">
           <CardHeader>
-            <CardTitle>
-                Actualizar producto
-            </CardTitle>
+            <CardTitle>Actualizar producto</CardTitle>
             <CardDescription>
-                Actualiza la información de tu producto.
+              Actualiza la información de tu producto.
             </CardDescription>
           </CardHeader>
           <UpdateSellForm dataUpdateProduct={product} />

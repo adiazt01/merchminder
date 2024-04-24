@@ -55,7 +55,7 @@ export function ProductDataTable<TData, TValue>({
     <div className="flex w-full h-full overflow-x-hidden gap-4 flex-col">
       <div className="flex items-center">
         <Input
-          placeholder="Filter emails..."
+          placeholder="Pepsi cola, torta, etc."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)

@@ -12,7 +12,7 @@ import { revalidatePath } from "next/cache";
 interface FormState {
   message?: string;
   data?: Product | null;
-  error?: Error | null;
+  error?: boolean;
 }
 
 export async function createProduct(data: FormData): Promise<FormState> {
@@ -25,6 +25,22 @@ export async function createProduct(data: FormData): Promise<FormState> {
   }
 
   try {
+    const productExists = await prisma.product.findFirst({
+      where: {
+        name: parsed.data.name,
+        userId,
+      },
+    });
+
+    if (productExists) {
+      return {
+        message:
+          "El producto ya ha sido creado, si intenta actualizarlo, vaya a la página de edición",
+        data: null,
+        error: true,
+      };
+    }
+
     const newProduct = await prisma.product.create({
       data: {
         name: parsed.data.name,
@@ -37,23 +53,23 @@ export async function createProduct(data: FormData): Promise<FormState> {
     revalidatePath("/dashboard/products");
 
     return {
-      message: "Product created successfully",
+      message: `El producto "${newProduct.name}" ha sido creado`,
       data: newProduct,
-      error: null,
+      error: false,
     };
   } catch (error) {
     if (error instanceof Error) {
       return {
-        message: "Failed to create product",
+        message: "EL producto no se ha podido crear",
         data: null,
-        error: error,
+        error: true,
       };
     }
 
     return {
-      message: "Failed to create product",
+      message: "EL producto no se ha podido crear",
       data: null,
-      error: null,
+      error: true,
     };
   }
 }
@@ -71,21 +87,21 @@ export async function deleteProduct(id: number): Promise<FormState> {
     return {
       message: "Product deleted successfully",
       data: null,
-      error: null,
+      error: false,
     };
   } catch (error) {
     if (error instanceof Error) {
       return {
         message: "Failed to delete product",
         data: null,
-        error: error,
+        error: true,
       };
     }
 
     return {
       message: "Failed to delete product",
       data: null,
-      error: null,
+      error: true,
     };
   }
 }
@@ -111,7 +127,11 @@ export async function updateProduct(
     });
 
     if (!currentProduct) {
-      throw new Error("Product not found");
+      return {
+        message: "Product not found",
+        data: null,
+        error: true,
+      };
     }
 
     const updatedProduct = await prisma.product.update({
@@ -132,23 +152,23 @@ export async function updateProduct(
     revalidatePath("/dashboard/products");
 
     return {
-      message: "Product updated successfully",
+      message: `Product "${updatedProduct.name}" updated successfully`,
       data: updatedProduct,
-      error: null,
+      error: false,
     };
   } catch (error) {
     if (error instanceof Error) {
       return {
         message: "Failed to update product",
         data: null,
-        error: error,
+        error: true,
       };
     }
 
     return {
       message: "Failed to update product",
       data: null,
-      error: null,
+      error: true,
     };
   }
 }

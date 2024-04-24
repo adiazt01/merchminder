@@ -28,8 +28,6 @@ export function BigSalesCard() {
     );
   }
 
-  console.log(selectedSale);
-
   const {
     saleTotal,
     clientId,
@@ -48,8 +46,10 @@ export function BigSalesCard() {
     };
   });
 
+  console.log(totalProductsSellsWithTotalPrice);
+
   return (
-    <Card className="sticky top-10 flex flex-col  order-first md:order-last">
+    <Card className="sticky flex-1 top-10 flex flex-col  order-first md:order-last">
       <CardHeader className="bg-gray-50 border-b py-4">
         <CardTitle className="text-xl">
           Venta # {id}
@@ -75,7 +75,10 @@ export function BigSalesCard() {
                 className="flex flex-row justify-between w-full"
               >
                 <span className="font-medium text-md text-neutral-600">
-                  {`${productSell.product.name} ${productSell.quantity}x`}
+                  {productSell?.product?.name &&
+                    `${productSell.product.name} ${productSell.quantity}x`}
+                  {!productSell?.product?.name &&
+                    `Producto eliminado ${productSell.quantity}x`}
                 </span>
                 <span className="font-bold -tracking-tighter">{`$${productSell.totalPrice}`}</span>
               </div>

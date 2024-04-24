@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { CircleUser } from "lucide-react";
+import { CircleUser, Loader, LogOut } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -8,13 +8,26 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { auth } from "@/utils/auth";
+import { LogoutDropdownMenuItem } from "../buttons/LogoutDropdownMenuItem";
 
-export function AccountDropdown() {
+export async function AccountDropdown() {
+  const session = await auth();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="secondary" size="icon" className="rounded-full">
-          <CircleUser className="h-5 w-5" />
+          <Avatar>
+            <AvatarImage
+              src={`${session?.user.image}`}
+              alt={`@${session?.user.name}`}
+            />
+            <AvatarFallback>
+              <Loader className="size-6 animate-spin" />
+            </AvatarFallback>
+          </Avatar>
           <span className="sr-only">Toggle user menu</span>
         </Button>
       </DropdownMenuTrigger>
@@ -24,7 +37,7 @@ export function AccountDropdown() {
         <DropdownMenuItem>Settings</DropdownMenuItem>
         <DropdownMenuItem>Support</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Logout</DropdownMenuItem>
+        <LogoutDropdownMenuItem />
       </DropdownMenuContent>
     </DropdownMenu>
   );

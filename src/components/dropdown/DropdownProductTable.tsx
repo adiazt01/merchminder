@@ -1,7 +1,6 @@
 "use client";
 
 import { Product } from "@prisma/client";
-import { Row } from "@tanstack/react-table";
 import { Bolt, MoreHorizontal, Pencil, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -24,13 +23,27 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { deleteProduct } from "@/actions/productsActions";
+import { useToast } from "@/components/ui/use-toast"
 
 export function DropwdownProductTable({ product }: { product: Product }) {
   const router = useRouter();
+  const { toast } = useToast();
   const { id } = product;
 
   async function handleDelete() {
-    await deleteProduct(id);
+    const res = await deleteProduct(id);
+
+    if (res.error) {
+      toast({
+        title: "El producto no pudo ser eliminado",
+        description: "Por favor intenta de nuevo",
+      }) 
+    } else {
+      toast({
+        title: "Producto eliminado",
+        description: "El producto ha sido eliminado exitosamente",
+      });
+    }
   }
 
   return (

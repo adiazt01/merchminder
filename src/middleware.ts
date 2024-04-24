@@ -10,5 +10,5 @@ export default auth((req: NextRequest) => {
 });
 
 export const config = {
-  matcher: ["/dashboard"],
+  matcher: ["/dashboard", "/dashboard/:path*"],
 };

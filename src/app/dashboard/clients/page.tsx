@@ -19,7 +19,7 @@ export default async function ClientsPage() {
           </Link>
         </Button>
       </div>
-      <section className="flex w-full h-full">
+      <section className="w-full">
         <ClientDataTable columns={columns} data={clients} />
       </section>
     </main>

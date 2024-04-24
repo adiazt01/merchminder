@@ -35,25 +35,29 @@ export default async function SalesPage() {
             </Link>
           </Button>
         </div>
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="grid row-span-3 gap-4">
-            <Card className="w-full">
-              <CardHeader>
-                <CardDescription className="-mb-1">Esta semana</CardDescription>
-                <CardTitle className="text-4xl">${salesThisWeek}</CardTitle>
-              </CardHeader>
-            </Card>
-            <Card className="w-full">
-              <CardHeader>
-                <CardDescription className="-mb-1">Este mes</CardDescription>
-                <CardTitle className="text-4xl">${salesThisMonth}</CardTitle>
-              </CardHeader>
-            </Card>
-            <div className="col-span-2">
+        <section className="flex flex-col md:flex-row gap-4">
+          <div className="flex flex-1 flex-col gap-4">
+            <div className="flex flex-col gap-4">
+              <Card>
+                <CardHeader>
+                  <CardDescription className="-mb-1">
+                    Esta semana
+                  </CardDescription>
+                  <CardTitle className="text-4xl">${salesThisWeek}</CardTitle>
+                </CardHeader>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardDescription className="-mb-1">Este mes</CardDescription>
+                  <CardTitle className="text-4xl">${salesThisMonth}</CardTitle>
+                </CardHeader>
+              </Card>
+            </div>
+            <div className="w-full">
               <SellDataTable columns={columns} data={sells} />
             </div>
           </div>
-          <div className="relative w-full ">
+          <div>
             <BigSalesCard />
           </div>
         </section>

@@ -52,7 +52,7 @@ export function ProductDataTable<TData, TValue>({
   });
 
   return (
-    <div className="flex w-full overflow-x-hidden gap-4 flex-col">
+    <div className="flex w-full h-full overflow-x-hidden gap-4 flex-col">
       <div className="flex items-center">
         <Input
           placeholder="Filter emails..."
@@ -63,7 +63,7 @@ export function ProductDataTable<TData, TValue>({
           className="w-full max-w-xs"
         />
       </div>
-      <div className="flex flex-col overflow-x-auto rounded-md bg-white border">
+      <div className="flex w-full h-full flex-col overflow-x-auto rounded-md bg-white border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

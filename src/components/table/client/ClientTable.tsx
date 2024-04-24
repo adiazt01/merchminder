@@ -52,7 +52,7 @@ export function ClientDataTable<TData, TValue>({
   });
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full overflow-hidden h-full">
       <div className="flex items-center py-4">
         <Input
           placeholder="Busca un cliente por nombre"
@@ -63,7 +63,7 @@ export function ClientDataTable<TData, TValue>({
           className="max-w-sm"
         />
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md overflow-x-auto border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

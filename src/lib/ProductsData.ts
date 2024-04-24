@@ -4,6 +4,8 @@ import { getUserId } from "./user";
 export const getAllProducts = async () => {
   const userId = await getUserId();
 
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   try {
     const products = await prisma.product.findMany({
       where: {

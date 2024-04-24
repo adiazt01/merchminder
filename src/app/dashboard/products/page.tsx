@@ -1,13 +1,11 @@
-import { ProductDataTable } from "@/components/table/product/ProductTable";
-import { columns } from "@/components/table/product/ProductTableColumns";
+import { ProductContainerTable } from "@/components/containers/ProductContainerTable";
+import { TableDataSkeletons } from "@/components/skeletons/tables/TableDataSkeletons";
 import { Button } from "@/components/ui/button";
-import { getAllProducts } from "@/lib/ProductsData";
 import { Plus } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default async function ProductsPage() {
-  
-  const products = await getAllProducts();
 
   return (
     <main className="flex flex-col gap-4 p-4 lg:gap-6 lg:p-6">
@@ -21,14 +19,16 @@ export default async function ProductsPage() {
         <Button size="sm" asChild>
           <Link href="/dashboard/products/create">
             <Plus className="w-6 h-6 md:mr-2" />
-            <span className="hidden md:inline">
-              Crear producto
-            </span>
+            <span className="hidden md:inline">Crear producto</span>
           </Link>
         </Button>
       </div>
       <section className="flex w-full">
-        <ProductDataTable columns={columns} data={products} />
+        <Suspense fallback={
+          <TableDataSkeletons />
+        }>
+          <ProductContainerTable />
+        </Suspense>
       </section>
     </main>
   );

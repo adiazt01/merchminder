@@ -23,6 +23,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+import { Label } from "@/components/ui/label";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -54,14 +56,21 @@ export function ProductDataTable<TData, TValue>({
   return (
     <div className="flex p-2.5 w-full h-full overflow-x-hidden gap-4 flex-col">
       <div className="flex items-center">
-        <Input
-          placeholder="Pepsi cola, torta, etc."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="w-full max-w-xs"
-        />
+        <div className="relative">
+          <Label htmlFor="search">Buscar productos</Label>
+          <Search className="absolute left-2.5 bottom-3 h-4 w-4 text-muted-foreground" />
+          <Input
+            type="search"
+            id="search"
+            name="search"
+            placeholder="Search products..."
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("name")?.setFilterValue(event.target.value)
+            }
+            className="w-full appearance-none bg-background pl-8 shadow-none "
+          />
+        </div>
       </div>
       <div className="flex w-full h-full flex-col overflow-x-auto rounded-md bg-white border">
         <Table>

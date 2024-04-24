@@ -109,7 +109,6 @@ export default function CreateProductPage() {
                           {...field}
                         />
                       </FormControl>
-
                       <FormMessage />
                     </FormItem>
                   )}

@@ -10,7 +10,7 @@ export async function ClientContainerTable() {
       {clients.length > 0 ? (
         <ClientDataTable columns={columns} data={clients} />
       ) : (
-        <div className="flex flex-col h-40  w-full items-center justify-center rounded-lg border border-dashed shadow-sm">
+        <div className="flex flex-col h-96  w-full items-center justify-center rounded-lg border border-dashed shadow-sm">
           <div className="flex h-full flex-col justify-center items-center gap-1 text-center">
             <h3 className="text-2xl font-bold tracking-tight">
               No hay clientes

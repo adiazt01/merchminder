@@ -54,3 +54,34 @@ export async function createClient(data: FormData): Promise<FormState> {
     };
   }
 }
+
+export async function deleteClient(id: number): Promise<FormState> {
+  try {
+    await prisma.client.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    revalidatePath("/dashboard/clients");
+    return {
+      message: "Client deleted successfully",
+      data: null,
+      error: null,
+    };
+  } catch (error) {
+    if (error instanceof Error) {
+      return {
+        message: "Failed to delete client",
+        data: null,
+        error: error,
+      };
+    }
+
+    return {
+      message: "Failed to delete client",
+      data: null,
+      error: null,
+    };
+  }
+}

@@ -1,59 +1,44 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal, ArrowUpDown } from "lucide-react";
 import { Client } from "@prisma/client";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { DropdownClientTable } from "@/components/dropdown/DropdownClientTable";
 
 export const columns: ColumnDef<Client>[] = [
   {
-    id: "actions",
+    header: () => <div className="text-center">Nombre</div>,
+    accessorKey: "name",
     cell: ({ row }) => {
-      const product = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() =>
-                navigator.clipboard.writeText(product.id.toString())
-              }
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      const name = row.original.name;
+      return <div className="text-center">{name}</div>;
     },
   },
   {
-    header: "Name",
-    accessorKey: "name",
-  },
-  {
-    header: "Phone",
+    header: () => <div className="text-center">Teléfono</div>,
     accessorKey: "phone",
+    cell: ({ row }) => {
+      const phone = row.original.phone;
+      return <div className="text-center">{phone}</div>;
+    },
   },
   {
-    header: "Email",
+    header: () => <div className="text-center">Email</div>,
     accessorKey: "email",
+    cell: ({ row }) => {
+      const email = row.original.email;
+      return <div className="text-center">{email}</div>;
+    },
+  },
+  {
+    id: "actions",
+    header: () => <div className="text-center">Acciones</div>,
+    cell: ({ row }) => {
+      const client = row.original;
+      return (
+        <div className="flex flex-row items-center justify-center">
+          <DropdownClientTable client={client} />
+        </div>
+      );
+    },
   },
 ];

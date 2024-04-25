@@ -1,30 +1,16 @@
 import { BigSalesCard } from "@/components/card/BigSalesCard";
 import { CardSalesThisMonth } from "@/components/card/CardSalesThisMonth";
 import { CardSalesThisWeek } from "@/components/card/CardSalesThisWeek";
+import { SellContainerTable } from "@/components/containers/SellContainerTable";
 import { SkeletonCardSales } from "@/components/skeletons/cards/SkeletonCardSales";
-import { SellDataTable } from "@/components/table/sell/SellTable";
-import { columns } from "@/components/table/sell/SellTableColumns";
+import { TableDataSkeletons } from "@/components/skeletons/tables/TableDataSkeletons";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { SalesProvider } from "@/context/SalesContext";
-import {
-  getAllSales,
-  getSalesThisMonth,
-  getSalesThisWeek,
-} from "@/lib/SellData";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 
 export default async function SalesPage() {
-  const sells = await getAllSales();
-
   return (
     <SalesProvider>
       <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
@@ -53,7 +39,9 @@ export default async function SalesPage() {
               </Suspense>
             </div>
             <div className="w-full">
-              <SellDataTable columns={columns} data={sells} />
+              <Suspense fallback={<TableDataSkeletons />}>
+                <SellContainerTable />
+              </Suspense>
             </div>
           </div>
           <div>

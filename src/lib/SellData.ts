@@ -3,6 +3,7 @@ import { getUserId } from "./user";
 
 export const getAllSales = async () => {
   const userId = await getUserId();
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   try {
     const sales = await prisma.sale.findMany({

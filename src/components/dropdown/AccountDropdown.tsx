@@ -32,10 +32,9 @@ export async function AccountDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>Settings</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
+        <DropdownMenuLabel>
+          {session?.user.name}
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <LogoutDropdownMenuItem />
       </DropdownMenuContent>

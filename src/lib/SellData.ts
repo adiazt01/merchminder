@@ -10,11 +10,10 @@ export const getAllSales = async () => {
         userId,
       },
       include: {
-       client: true,
+        client: true,
         saleItems: {
           include: {
             product: true,
-            
           },
         },
       },

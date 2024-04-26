@@ -11,7 +11,7 @@ export async function CardSalesThisMonth(){
     const salesThisMonth = await getSalesThisMonth();
 
     return (
-        <Card className="h-32">
+        <Card className="w-full h-32">
         <CardHeader>
           <CardDescription>Este mes</CardDescription>
         </CardHeader>

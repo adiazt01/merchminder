@@ -25,6 +25,43 @@ export const getAllSales = async () => {
   }
 };
 
+export const getSalesTotalYearForChart = async () => {
+  const userId = await getUserId();
+
+  try {
+    const sales = await prisma.sale.findMany({
+      where: {
+        userId,
+        createdAt: {
+          gte: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
+        },
+      },
+      select: {
+        createdAt: true,
+        saleTotal: true,
+      },
+    });
+
+    const salesTotalPerMonth = Array(12).fill(0);
+
+    sales.forEach((sale) => {
+      const saleMonth = sale.createdAt.getMonth();
+      salesTotalPerMonth[saleMonth] += sale.saleTotal;
+    });
+
+    const formattedSalesTotalPerMonth = salesTotalPerMonth.map((salesTotal, index) => ({
+      month: index + 1,
+      sales: salesTotal,
+    }));
+
+    console.log(formattedSalesTotalPerMonth);
+
+    return formattedSalesTotalPerMonth;
+  } catch (error) {
+    throw new Error("Error fetching sales data");
+  }
+};
+
 export const getSalesThisWeek = async () => {
   const userId = await getUserId();
 

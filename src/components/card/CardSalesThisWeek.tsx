@@ -11,7 +11,7 @@ export async function CardSalesThisWeek() {
   const salesThisWeek = await getSalesThisWeek();
 
   return (
-    <Card className="h-32">
+    <Card className="w-full h-32">
       <CardHeader>
         <CardDescription>Esta semana</CardDescription>
       </CardHeader>

@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function SkeletonCardSales() {
   return (
-    <Card>
+    <Card className="w-full">
       <Skeleton className="h-[7.9rem]" />
     </Card>
   );

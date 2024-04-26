@@ -66,7 +66,7 @@ export default async function Home() {
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Button variant="primary">Get Started</Button>
+                  <Button variant="default">Get Started</Button>
                   <Button variant="secondary">Contact Sales</Button>
                 </div>
               </div>
@@ -200,7 +200,7 @@ export default async function Home() {
               </p>
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end">
-              <Button variant="primary">Contact Sales</Button>
+              <Button variant="default">Contact Sales</Button>
               <Button variant="secondary">Learn more</Button>
             </div>
           </div>

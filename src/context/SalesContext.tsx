@@ -1,21 +1,25 @@
 "use client";
 
-import { Client, Sale, SaleToProduct } from "@prisma/client";
+import { Client, Product, Sale, SaleToProduct } from "@prisma/client";
 import { createContext, useContext, useState } from "react";
 
-type SaleWithDetails = Sale & {
-  client: Client;
-  saleItems: SaleToProduct[];
+type SaleItemWithProduct = SaleToProduct & {
+  product: Product;
 };
 
-interface SalesContextInterface {
+export type SaleWithDetails = Sale & {
+  client: Client;
+  saleItems: SaleItemWithProduct[];
+};
+
+export interface SalesContextInterface {
   selectedSale: SaleWithDetails | null;
   setSelectedSale: (sale: SaleWithDetails) => void;
 }
 
 
 export const SalesContext = createContext<SalesContextInterface>({
-    selectedSale: null,
+    selectedSale: null as SaleWithDetails | null,
     setSelectedSale: () => {},
 });
 

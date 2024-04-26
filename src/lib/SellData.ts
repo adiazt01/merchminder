@@ -42,6 +42,10 @@ export const getSalesTotalYearForChart = async () => {
       },
     });
 
+    if (sales.length === 0) {
+      return [];
+    }
+
     const salesTotalPerMonth = Array(12).fill(0);
 
     sales.forEach((sale) => {
@@ -49,11 +53,12 @@ export const getSalesTotalYearForChart = async () => {
       salesTotalPerMonth[saleMonth] += sale.saleTotal;
     });
 
-    const formattedSalesTotalPerMonth = salesTotalPerMonth.map((salesTotal, index) => ({
-      month: index + 1,
-      sales: salesTotal,
-    }));
-
+    const formattedSalesTotalPerMonth = salesTotalPerMonth.map(
+      (salesTotal, index) => ({
+        month: index + 1,
+        sales: salesTotal,
+      })
+    );
 
     return formattedSalesTotalPerMonth;
   } catch (error) {

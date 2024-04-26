@@ -8,7 +8,6 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  CartesianGrid,
 } from "recharts";
 
 interface BarChartSalesProps {
@@ -20,6 +19,19 @@ interface BarChartSalesProps {
 export function BarChartSales({ data }: BarChartSalesProps) {
   const isServerSide = useIsServerSide();
   if (isServerSide) return null;
+
+  if (data.length === 0) {
+    return (
+      <div className="flex flex-col h-full  w-full items-center justify-center rounded-lg border border-dashed shadow-sm">
+      <div className="flex h-full flex-col justify-center items-center gap-1 text-center">
+        <h3 className="text-2xl font-bold tracking-tight">No hay ventas</h3>
+        <p className="text-sm text-muted-foreground">
+          Intenta registrar una venta
+        </p>
+      </div>
+    </div>
+    );
+  }
 
   const monthNames = [
     "Enero",
@@ -40,6 +52,8 @@ export function BarChartSales({ data }: BarChartSalesProps) {
     ...item,
     month: monthNames[item.month - 1],
   }));
+
+  console.log(transformedData);
 
   return (
     <ResponsiveContainer width="100%" height="100%">

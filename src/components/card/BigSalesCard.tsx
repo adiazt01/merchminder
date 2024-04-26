@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { SalesContext } from "@/context/SalesContext";
 import { useContext } from "react";
 
+
 export function BigSalesCard() {
   const { selectedSale } = useContext(SalesContext);
 
@@ -30,13 +31,10 @@ export function BigSalesCard() {
 
   const {
     saleTotal,
-    clientId,
     createdAt,
     id,
-    updatedAt,
-    userId,
     saleItems,
-    client,
+    client
   } = selectedSale;
 
   const totalProductsSellsWithTotalPrice = saleItems.map((item) => {
@@ -68,7 +66,7 @@ export function BigSalesCard() {
             Productos vendidos
           </h3>
           <div className="flex flex-col">
-            {totalProductsSellsWithTotalPrice.map((productSell) => (
+            {totalProductsSellsWithTotalPrice.map(productSell => (
               <div
                 key={productSell.productId}
                 className="flex flex-row justify-between w-full"

@@ -1,6 +1,6 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, Row } from "@tanstack/react-table";
 import {
   MoreHorizontal,
   ArrowUp,
@@ -18,7 +18,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Sale } from "@prisma/client";
+import { Client, Sale, SaleToProduct } from "@prisma/client";
 import { useContext } from "react";
 import { SalesContext } from "@/context/SalesContext";
 import { useRouter } from "next/navigation";
@@ -34,14 +34,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { deleteSellAction } from "@/actions/salesActions";
+import { SaleWithDetails } from "@/context/SalesContext";
 
-const ActionCell = ({ row }) => {
-  const sell = row.original;
+const ActionCell = ({ sale }:{
+  sale: SaleWithDetails
+}) => {
   const { setSelectedSale } = useContext(SalesContext);
   const router = useRouter();
 
   const handleDelete = async () => {
-    const res = await deleteSellAction(sell.id);
+    const res = await deleteSellAction(sale.id);
   };
 
   return (
@@ -61,7 +63,7 @@ const ActionCell = ({ row }) => {
           <Separator />
           <DropdownMenuItem
             onClick={() => {
-              setSelectedSale(sell);
+              setSelectedSale(sale);
             }}
           >
             <Eye className="h-4 w-4 mr-2" />
@@ -69,7 +71,7 @@ const ActionCell = ({ row }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              router.push(`/dashboard/sales/update/${sell.id}`);
+              router.push(`/dashboard/sales/update/${sale.id}`);
             }}
           >
             <Pencil className="h-4 w-4 mr-2" />
@@ -166,10 +168,13 @@ export const columns: ColumnDef<Sale>[] = [
   {
     id: "actions",
     header: () => <h3 className="w-full text-center">Actions</h3>,
-    cell: ({ row }) => (
-      <div className="flex flex-row items-center justify-center">
-        <ActionCell row={row} />
-      </div>
-    ),
+    cell: ({ row }) => {
+      const sale = row.original as SaleWithDetails;
+      return (
+        <div className="flex flex-row items-center justify-center">
+          <ActionCell sale={sale} />
+        </div>
+      );
+    },
   },
 ];

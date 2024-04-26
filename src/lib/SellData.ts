@@ -54,7 +54,6 @@ export const getSalesTotalYearForChart = async () => {
       sales: salesTotal,
     }));
 
-    console.log(formattedSalesTotalPerMonth);
 
     return formattedSalesTotalPerMonth;
   } catch (error) {

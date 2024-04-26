@@ -23,7 +23,7 @@ export async function createSell(
     products: JSON.parse(formData.products),
   });
 
-  console.log(clientId, products);
+  (clientId, products);
 
   for (const product of products) {
     if (!product.productId || !product.quantity) {

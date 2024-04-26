@@ -90,7 +90,6 @@ export function CreateSellForm({
     formData.append("products", JSON.stringify(products));
 
     const res = await createSell(formData);
-    console.log(res);
   }
 
   return (

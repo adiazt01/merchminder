@@ -41,7 +41,6 @@ export function BarChartSales({ data }: BarChartSalesProps) {
     month: monthNames[item.month - 1],
   }));
 
-  console.log(transformedData);
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart width={150} height={40} data={transformedData}>

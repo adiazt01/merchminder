@@ -46,7 +46,6 @@ export function BigSalesCard() {
     };
   });
 
-  console.log(totalProductsSellsWithTotalPrice);
 
   return (
     <Card className="sticky flex-1 top-10 flex flex-col  order-first md:order-last">

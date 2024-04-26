@@ -42,7 +42,6 @@ const ActionCell = ({ row }) => {
 
   const handleDelete = async () => {
     const res = await deleteSellAction(sell.id);
-    console.log(res);
   };
 
   return (
